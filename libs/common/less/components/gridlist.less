@@ -1,0 +1,201 @@
+/* ******* GRIDLIST ******* */
+
+.com-gridlist-counter {
+    margin: 0 0 12px
+}
+.com-gridlist {
+    margin: 0 0 24px;
+    overflow: hidden;
+}
+.com-gridlist table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+}
+.com-gridlist td,
+.com-gridlist th {
+    text-align: left;
+    padding: 6px;
+}
+.com-gridlist th > .inner,
+.com-gridlist td > .inner {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    text-decoration: none;
+}
+.com-gridlist thead {
+}
+.com-gridlist th {
+    line-height: 14px;
+    font-weight: bold;
+}
+.com-gridlist th:first-child {
+}
+.com-gridlist th:last-child {
+}
+.com-gridlist th.sort {
+    -webkit-transition: background-color 0.3s ease-in-out;
+            transition: background-color 0.3s ease-in-out;
+}
+.com-gridlist th.sort:hover {
+    background: #f0f0f0;
+    -webkit-transition: background-color 0.1s ease-in-out;
+            transition: background-color 0.1s ease-in-out;
+}
+.com-gridlist th.sort .inner {
+    display: block;
+    margin: -6px;
+    padding: 6px 20px 6px 6px;
+    color: #333333;
+    cursor: pointer;
+}
+.com-gridlist th .arrow {
+    width: 10px;
+    height: 10px;
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    margin: -3px 0 0 0;
+}
+.com-gridlist td {
+    vertical-align: top;
+    word-wrap: break-word;
+    background-color: transparent;
+    -webkit-transition: background-color 0.3s ease-in-out;
+            transition: background-color 0.3s ease-in-out;
+}
+.com-gridlist tr:hover td {
+    background-color: #f0f0f0;
+    -webkit-transition: background-color 0.1s ease-in-out;
+            transition: background-color 0.1s ease-in-out;
+}
+
+.com-gridlist-link {
+    font-size: 11px;
+    margin: 0 0 0 6px;
+}
+.com-gridlist-link:first-child {
+    margin: 0;
+}
+.com-gridlist .expire {
+    color: #D2A323;
+    font-weight: bold;
+}
+.com-gridlist .expired {
+    color: #DF3E3E;
+    font-weight: bold;
+}
+.com-gridlist.error th {
+    border-color: #df3e3e;
+}
+
+.com-gridlist-links {
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    list-style: none;
+}
+.com-gridlist-links li {
+    display: inline-block;
+    font-size: 11px;
+    vertical-align: middle;
+}
+.com-gridlist-links li:before {
+    content: '|';
+    margin: 0 4px;
+}
+.com-gridlist-links li:first-child:before {
+    content: normal;
+    margin: 0;
+}
+.com-gridlist-links.style2 {
+}
+.com-gridlist-links.style2 li {
+    display: block;
+}
+.com-gridlist-links.style2 li:before {
+    content: normal;
+    margin: 0;
+}
+
+.com-gridlist-middle td,
+.com-gridlist-middle th {
+    vertical-align: middle;
+}
+
+.com-gridlist-font-11 {
+    font-size: 11px;
+    line-height: 14px;
+}
+.com-gridlist-font-11 br {
+    height: 14px;
+    line-height: 14px;
+}
+
+.com-gridlist .control {
+}
+.com-gridlist .control .icon {
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-transition: opacity 0.3s ease-in-out;
+            transition: opacity 0.3s ease-in-out;
+}
+.com-gridlist .control .icon:hover {
+    opacity: 0.7;
+    -webkit-transition: opacity 0.1s ease-in-out;
+            transition: opacity 0.1s ease-in-out;
+}
+.com-gridlist .control input[type="checkbox"],
+.com-gridlist .control input[type="radio"] {
+    vertical-align: middle;
+    margin: 0;
+}
+
+/* Slide gridlist box */
+
+.com-gridlist .slide-tr {
+}
+.com-gridlist .slide-tr > td {
+    border-top: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+    padding: 0;
+}
+.com-gridlist .slide-tr:hover > td {
+    background-color: #fff;
+}
+.com-gridlist .slide-tr .slide-box {
+    height: 0;
+    overflow: hidden;
+    position: relative;
+}
+.com-gridlist .slide-tr .slide-box > .inner {
+    padding: 6px;
+}
+
+.com-gridlist-grey tr td {
+    background: #F5F5F5;
+}
+.com-gridlist .has-padding tr td:first-child {
+    padding-left: 20px;
+}
+.com-gridlist .has-padding-two tr td:first-child {
+    padding-left: 40px;
+}
+
+/* ******* COMPONENTS IN GRIDLIST ******* */
+
+/* *** DRAG'n'DROP *** */
+
+.com-gridlist .cm-draganddrop-helper {
+    display: table;
+    table-layout: fixed;
+}
+.com-gridlist tr.cm-draganddrop-helper td {
+    background-color: #D9EAFB;
+}

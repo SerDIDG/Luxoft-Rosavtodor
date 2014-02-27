@@ -1,0 +1,62 @@
+/* ******* DATEPICKER ******* */
+
+.com-datepicker-input {
+    max-width: 200px;
+    position: relative;
+    z-index: 1;
+    outline: none;
+
+    &.has-clear-button {
+        margin: 0 26px 0 0;
+    }
+
+    > .icon {
+        position: absolute;
+
+        &.datepicker {
+            top: 0;
+            right: 0;
+        }
+
+        &.close {
+            top: 6px;
+            right: 6px;
+        }
+
+        &.remove {
+            right: -26px;
+        }
+    }
+}
+
+/* Tooltip */
+
+.com-datepicker-tooltip {
+
+    > .inner > .scroll {
+        overflow: visible;
+    }
+
+    .button.today {
+        width: 100%;
+        padding: 0;
+        margin: 4px 0 0 0;
+    }
+}
+
+/* Calendar */
+
+.com-datepicker-calendar {
+    .selects {
+        .months {
+            width: 111px;
+            float: left;
+        }
+
+        .years {
+            width: 75px;
+            margin-left: 4px;
+            float: left;
+        }
+    }
+}
