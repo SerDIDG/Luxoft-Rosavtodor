@@ -9,11 +9,23 @@
 
     <script type="text/javascript" src="libs/common/js/common.js"></script>
     <script type="text/javascript" src="libs/common/js/useragent.js"></script>
+    <script type="text/javascript" src="libs/common/js/tooltip.js"></script>
+    <script type="text/javascript" src="libs/common/js/gallery.js"></script>
 
     <script type="text/javascript">
         cm.onload(function(){
             // Useragent
             Com.UA.setBrowserClass();
+            // Tooltip
+            new Com.Tooltip({
+                'target' : cm.getEl('status'),
+                'left' : '- ((selfWidth - targetWidth) / 2)',
+                'top' : '- (selfHeight + 3)',
+                'content' : cm.Node('div', 'Онлайн'),
+                'className' : 'tpl-tooltip has-arrow-bottom'
+            });
+            // Gallery
+            Com.GalleryCollector();
         });
     </script>
 </head>
@@ -35,17 +47,55 @@
 <div class="content">
     <div class="inner">
 
-        <div class="content-cols two style1 table-titles">
-            <div class="c">
-                <h1>Новостная лента</h1>
+        <div class="tpl-filter">
+            <h5>Фильтр</h5>
+
+            <div class="filter-line">
+                <div class="form-field has-icon-right filter-search-phrase">
+                    <div class="icon tpl-icon small clear linked"></div>
+                    <input type="text" placeholder="Введите поисковую фразу">
+                </div>
             </div>
 
-            <div class="r">
-                <h1>Анонсы главных новостей</h1>
+            <div class="filter-line">
+                <div class="cm-toolbar clear">
+                    <div class="left">
+                        <ul class="group">
+                            <li class="button active">Все</li>
+                        </ul>
+
+                        <ul class="group is-merged">
+                            <li class="button">ДТП</li>
+                            <li class="button">Перекрытие</li>
+                            <li class="button">Авария</li>
+                            <li class="button">Метео</li>
+                            <li class="button">ЧП</li>
+                            <li class="button">Бюджет</li>
+                            <li class="button">ФЦП</li>
+                            <li class="button">Минтранс</li>
+                            <li class="button">Закон</li>
+                            <li class="button">Услуги</li>
+                        </ul>
+
+                        <ul class="group">
+                            <li>
+                                <div class="tpl-status online">
+                                    Статус<div class="status" id="status"></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="right">
+                        <ul class="group">
+                            <li class="button">Информационные риски за сутки</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="content-cols two style1 table-heading">
+        <div class="content-cols two style3 table-heading">
             <div class="c">
                 <div class="news-listing">
                     <table>
@@ -64,7 +114,7 @@
             <div class="r"></div>
         </div>
 
-        <div class="content-cols two style1">
+        <div class="content-cols two style3">
             <div class="c">
                 <div class="news-listing">
                     <table>
@@ -199,18 +249,30 @@
             </div>
 
             <div class="r">
-                <div class="content-block">
+                <div class="content-block has-risks">
                     <div class="article-container">
                         <div class="inner">
-                            <div class="article">
+                            <div class="article" data-gallery="true">
                                 <h2>Дорожные фонды в регионах остались безфинансирования</h2>
                                 <h6>14:38 <span class="tpl-lightness">(12 минуты назад)</span></h6>
                                 <p class="article-source">
                                     <a class="italic-source">ИА РоссБалт</a>
                                     <span class="tpl-counter">5</span>
                                 </p>
+                                <p>
+                                    <a class="tpl-image-preview" data-image="true" href="img/samples/1.jpg">
+                                        <img title="Sample 1" alt="Sample 1" src="img/samples/1-th.jpg">
+                                    </a>
+                                    <a class="tpl-image-preview" data-image="true" href="img/samples/2.jpg">
+                                        <img title="Sample 2" alt="Sample 2" src="img/samples/2-th.jpg">
+                                    </a>
+                                    <a class="tpl-image-preview" data-image="true" href="img/samples/3.jpg">
+                                        <img title="Sample 3" alt="Sample 3" src="img/samples/3-th.jpg">
+                                    </a>
+                                </p>
                                 <p>Правительство не будет повышать акцизы на топливо до 2017 года более, чем установлено в законе о сборах на данный период, пишут «Ведомости». Таким образом, дорожные фонды в регионах могут остаться без денег.</p>
                                 <p>Ранее Минфин оценил дефицит фондов на период 2014-2016 годов в 300 млрд рублей. Регионы стали испытывать недостаток в финансировании с 2012 года, после введения дифференцируемой системы акцизов...</p>
+                                <p>Плохое качество подготовки дорог к саммиту в 2013 году стало причиной увольнения <span class="tpl-glossary">главы департамента дорожного хозяйства Приморского края</span>.</p>
                             </div>
 
                             <div class="relative-articles">
@@ -239,6 +301,30 @@
                                         <div class="r">
                                             <a>Во Владивостоке украли кабель с дороги, построенной к саммиту</a>
                                         </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="separator"></div>
+
+                    <div class="risks-container">
+                        <div class="inner">
+                            <h2>Риски</h2>
+                            <div class="risks-listing">
+                                <ul>
+                                    <li class="clear">
+                                        <div class="r">
+                                            <span class="tpl-counter red">-50</span>
+                                        </div>
+                                        <div class="l">И. Петеримов</div>
+                                    </li>
+                                    <li class="clear">
+                                        <div class="r">
+                                            <span class="tpl-counter red">-10</span>
+                                        </div>
+                                        <div class="l">Администрация Приморского края</div>
                                     </li>
                                 </ul>
                             </div>

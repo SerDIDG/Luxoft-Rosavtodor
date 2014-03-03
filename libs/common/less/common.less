@@ -14,28 +14,28 @@
     bottom: @bottom;
     left: @left;
 }
-.cm-transition (@property, @duration, @easing) {
-    -webkit-transition: @property @duration @easing;
-            transition: @property @duration @easing;
+.cm-transition (@properties: none) {
+    -webkit-transition: @properties;
+            transition: @properties;
 }
 .cm-linear-gradient (@params) {
     background-image: -webkit-linear-gradient(@params);
     background-image:         linear-gradient(@params);
 }
 .cm-placeholder (@color){
-    ::-webkit-input-placeholder {
+    &::-webkit-input-placeholder {
         opacity: 1;
         color: @color;
     }
-    :-moz-placeholder {
+    &:-moz-placeholder {
         opacity: 1;
         color: @color;
     }
-    ::-moz-placeholder {
+    &::-moz-placeholder {
         opacity: 1;
         color: @color;
     }
-    :-ms-input-placeholder {
+    &:-ms-input-placeholder {
         opacity: 1;
         color: @color;
     }
@@ -77,6 +77,7 @@ select {
 input, select, textarea {
 	outline: none;
 	margin: 0;
+    //-webkit-appearance: none;
 }
 table {
 	width: 100%;
@@ -111,6 +112,8 @@ iframe {
 /* ******* ICONS ******* */
 
 .icon {
+    background: transparent center center no-repeat;
+
     &.inline {
         margin: 0 4px;
         vertical-align: middle;
@@ -162,7 +165,7 @@ iframe {
     &.datepicker {
         height: 24px;
         width: 24px;
-        background: url("@{cm-image-path}/icons/calendar.png");
+        background-image: url("@{cm-image-path}/icons/calendar.png");
     }
     &.chrome,
     &.firefox,
@@ -208,7 +211,7 @@ iframe {
     &.remove {
         width: 16px;
         height: 16px;
-        background: url("@{cm-image-path}/icons/remove.png");
+        background-image: url("@{cm-image-path}/icons/remove.png");
     }
     &.settings {
         width: 16px;
@@ -346,6 +349,9 @@ ul.indent {
     height: auto;
     display: block;
 }
+.cm-block-padding {
+    padding: @cm-block-padding;
+}
 
 /* ******* ROWS ******* */
 
@@ -387,19 +393,18 @@ ul.indent {
 	cursor: default;
 }
 .form.in-content {
-    margin: 0 0 24px;
+    margin: 0 0 @cm-block-margin;
 }
 .form .title {
 	font-size: 14px;
 	font-weight: bold;
 	margin-bottom: 10px;
 }
-.form .placeholder {
-	color: #999 !important;
-	font-style: italic !important;
-}
+
+/* Field */
+
 .form dl {
-	margin: 10px 0 0 0;
+	margin: @cm-form-field-indent 0 0 0;
 	padding: 0;
 	display: block;
 	clear: both;
@@ -416,10 +421,12 @@ ul.indent {
     height: 0;
 }
 .form dt {
-	width: 150px;
-	float: left;
+	width: @cm-form-dt-width;
 	display: block;
 	margin: 0;
+    padding: ((@cm-form-field-height - @cm-line-height) / 2) 0;
+    float: left;
+    line-height: @cm-line-height;
 }
 .form dl.error dt {
 	font-weight: bold;
@@ -431,13 +438,48 @@ ul.indent {
 }
 .form dd {
 	display: block;
-	margin: 0 0 0 160px;
+	margin: 0 0 0 (150px + @cm-form-field-indent);
 	padding: 0;
 	position: relative;
 }
 .form dd:first-child {
 	margin: 0;
 }
+
+/* *** FIELD WIS ICON *** */
+
+.form-field {
+    position: relative;
+
+    .icon {
+        width: @cm-form-field-height !important;
+        height: @cm-form-field-height !important;
+        position: absolute;
+    }
+
+    &.has-icon-left {
+        .icon {
+            .cm-position(0, auto, auto, 0);
+        }
+
+        input {
+            padding-left: @cm-form-field-height;
+        }
+    }
+
+    &.has-icon-right {
+        .icon {
+            .cm-position(0, 0, auto, auto);
+        }
+
+        input {
+            padding-right: @cm-form-field-height;
+        }
+    }
+}
+
+/* *** Hint ***  */
+
 .form dl .hint {
 	font-size: 11px;
 	line-height: 15px;
@@ -472,6 +514,9 @@ ul.indent {
 	width: 100%;
 	cursor: pointer;
 }
+
+/* Errors */
+
 .form dl.error input[type="text"],
 .form dl.error input[type="password"],
 .form dl.error textarea,
@@ -486,10 +531,9 @@ ul.indent {
 	border: 1px solid #090;
 	border-radius: 2px;
 }
-.form dl .two-cols .right input[type="text"],
-.form dl .two-cols .right input[type="password"],
-.form dl .two-cols .right  textarea {
-}
+
+/* Time Picker */
+
 .form dl .time { }
 .form dl .time input,
 .form dl .time select,
@@ -503,6 +547,8 @@ ul.indent {
 	float: left;
     text-align: center;
 }
+
+/* Browse Button */
 
 .browse-button {
 	display: inline-block;
@@ -518,14 +564,18 @@ ul.indent {
 	overflow: hidden;
 }
 .browse-button input[type="file"] {
+    height: 100%;
 	position: absolute;
 	top: 0;
 	right: 0;
 	opacity: 0;
 	cursor: pointer;
-}
-.ie8 .browse-button input[type="file"] {
-	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+
+    .ie8 >,
+    .ie7 >,
+    .ie6 > {
+        .cm-opacity-ie(0);
+    }
 }
 
 .form dl .birth {
@@ -544,6 +594,9 @@ ul.indent {
 	overflow: hidden;
 	text-align: center;
 }
+
+/* Columns */
+
 .form .cols {
 	margin: 10px 0 0;
 }
@@ -592,6 +645,9 @@ ul.indent {
 .form .cols .col > dl:first-child {
 	margin-top: 0;
 }
+
+/* Separator */
+
 .form hr {
 	height: 0;
 	overflow: hidden;
@@ -602,11 +658,14 @@ ul.indent {
 	display: block;
 	clear: both;
 }
+
+/* Fieldset */
+
 .form fieldset {
 	border-radius: 5px;
 	border: 1px solid #ccc;
-	padding: 10px 26px 26px 26px;
-	margin: 10px 0 0 0;
+	padding: 0 @cm-block-padding @cm-block-padding @cm-block-padding;
+	margin: @cm-form-field-indent 0 0 0;
 }
 .form fieldset:first-child {
 	margin: 0;
@@ -617,7 +676,7 @@ ul.indent {
 	color: #333;
 }
 .form fieldset dl:first-child {
-	margin-top: 8px;
+    margin-top: @cm-block-padding;
 }
 .form fieldset.error {
 	border-color: #C00;
@@ -649,7 +708,8 @@ ul.indent {
 /* Buttons Container */
 
 .btn-wrap {
-    margin-top: 20px;
+    height: @cm-form-field-height;
+    margin-top: @cm-block-margin;
 }
 .btn-wrap .button,
 .btn-wrap button,
@@ -657,7 +717,7 @@ ul.indent {
 .btn-wrap input[type="reset"],
 .btn-wrap input[type="submit"] {
     float: right;
-    margin: 0 0 0 8px;
+    margin: 0 0 0 @cm-button-indent;
     cursor: pointer;
 }
 .btn-wrap .button.left,
@@ -666,14 +726,14 @@ ul.indent {
 .btn-wrap input[type="reset"].left,
 .btn-wrap input[type="submit"].left {
     float: left;
-    margin: 0 8px 0 0;
+    margin: 0 @cm-button-indent 0 0;
 }
 .btn-wrap .hint {
     font-style: italic;
     overflow: hidden;
     text-align: right;
     font-size: 12px;
-    padding: 0 8px 0 0;
+    padding: 0 @cm-button-indent 0 0;
 }
 .btn-wrap.error .hint {
     color: #C00;
@@ -687,7 +747,7 @@ ul.indent {
 .btn-wrap.centered input {
     float: none;
     display: inline-block;
-    margin: 0 0 0 8px;
+    margin: 0 0 0 @cm-button-indent;
 }
 .btn-wrap.centered input:first-child {
     margin: 0;
@@ -696,24 +756,26 @@ ul.indent {
 /* Check Line */
 
 .check-line {
-	margin-top: 4px;
+	//margin-top: @cm-form-inner-indent;
+
+    &:first-child {
+        //margin: 0;
+    }
 }
-.check-line:first-child {
-	margin: 0;
-}
+
 .form dd > input[type="checkbox"],
 .check-line input[type="radio"],
 .check-line input[type="checkbox"] {
-	margin: 4px 0 5px 0;
+    @margin: (@cm-form-field-height - 13px) / 2;
+
+	margin: @margin 0 @margin 0;
 	vertical-align: top;
 	padding: 0;
 	cursor: pointer;
 }
-.check-line input[type="radio"] {
-	margin-top: 4px;
-}
 .check-line label {
-	padding: 3px 20px 3px 6px;
+    @padding: (@cm-form-field-height - @cm-line-height) / 2;
+	padding: @padding 20px @padding @cm-form-inner-indent;
 	cursor: pointer;
 	vertical-align: baseline;
 }
@@ -757,15 +819,24 @@ ul.indent {
 	display: block;
 }
 
+/* Field Box */
+
 .form-box {
+    > dt {
+        width: auto;
+        float: none;
+    }
+
+    > dd {
+        margin: 0 0 @cm-form-inner-indent 0;
+
+        &:last-child {
+            margin: 0;
+        }
+    }
 }
-.form-box dt {
-	width: auto;
-	float: none;
-}
-.form-box dd {
-	margin: 4px 0 0 0;
-}
+
+/* Form Field */
 
 .form-field {
 }
@@ -788,7 +859,8 @@ ul.indent {
 .form-field dd.controls .icon:first-child {
 	margin: 0;
 }
-.form-field dd.descr {
+.form-field dd.descr,
+.form-field dd.descr:last-child {
 	margin-right: 32px;
 }
 
@@ -796,7 +868,7 @@ ul.indent {
 }
 .form-image-box > .l {
 	float: left;
-	margin: 0 12px 0 0;
+	margin: 0 @cm-form-field-indent 0 0;
 }
 .form-image-box > .l img {
 	width: 80px;
@@ -811,18 +883,14 @@ ul.indent {
 }
 .form-image-box .browse-button {
 	display: block;
-	margin: 0 0 8px 0;
+	margin: 0 0 @cm-button-indent 0;
 }
 .form-image-box input[type="button"] {
 	width: 100px;
 }
 .form-image-box.style2 .browse-button {
 	display: inline-block;
-	margin: 0 4px 0 0;
-}
-.ie7 .form-image-box.style2 .browse-button {
-	display: inline;
-	zoom: 1;
+	margin: 0 @cm-button-indent 0 0;
 }
 .form-image-box.flat > .l {
 	float: none;
@@ -835,7 +903,6 @@ ul.indent {
 .form-image-box.flat > .r {
 	float: none;
 }
-
 
 /* Captcha */
 
@@ -978,19 +1045,19 @@ ul.has-icons-outside-three li {
 /* Form Filter From-To */
 
 .form-filter-fromto {
-	margin: 0 0 24px 0;
+	margin: 0 0 @cm-block-margin 0;
 }
 .form-filter-fromto dl {
 	float: left;
 	clear: none;
 }
 .form-filter-fromto .form-box {
-	width: 190px;
-	margin: 0 3% 0 0;
+	width: 200px;
+	margin: 0 @cm-block-margin 0 0;
 }
 .form-filter-fromto .buttons {
 	float: left;
-	margin: 30px 0 0 0;
+	margin: @cm-form-field-height 0 0 0;
 }
 .form-filter-fromto.simple .buttons {
     margin:  0;
@@ -1002,13 +1069,15 @@ input[type="text"],
 input[type="email"],
 input[type="number"],
 input[type="password"] {
+    @padding:(@cm-form-field-height - @cm-line-height) / 2;
+
 	width: 100%;
-	height: 22px;
-	padding: 2px 6px;
+    height: @cm-form-field-height;
+	padding: @padding 6px;
 	vertical-align: top;
     -moz-box-sizing: border-box;
          box-sizing: border-box;
-	line-height: 16px;
+	line-height: @cm-line-height;
 }
 .ie7 input[type="text"],
 .ie7 input[type="email"],
@@ -1022,8 +1091,8 @@ input[type="password"] {
 
 textarea {
 	width: 100%;
-	height: 84px;
-    min-height: 22px;
+	height: 100px;
+    min-height: @cm-form-field-height;
 	padding: 6px;
 	vertical-align: top;
 	-moz-box-sizing: border-box;
@@ -1047,9 +1116,9 @@ input[type="submit"],
 input[type="reset"],
 button,
 .button {
-	height: 22px;
+	height: @cm-form-field-height;
 	margin: 0;
-	padding: 0 10px;
+	padding: 0 (@cm-form-field-height / 2);
 	position: relative;
 	vertical-align: top;
     -moz-box-sizing: border-box;
@@ -1058,7 +1127,7 @@ button,
 	   -moz-background-clip: border-box;
 	        background-clip: border-box;
 	text-align: center;
-    line-height: 22px;
+    line-height: @cm-form-field-height;
     font-size: 12px;
 	cursor: pointer;
 }
@@ -1098,11 +1167,11 @@ button .icon.remove,
 
 select {
 	width: 100%;
-	height: 22px;
+	height: @cm-form-field-height;
 	vertical-align: top;
 }
 select[multiple] {
-	height: 84px;
+	height: 100px;
 }
 
 /* Progress Bar */
@@ -1133,9 +1202,9 @@ select[multiple] {
 /* *** Content Table *** */
 
 .content-table {
-}
-.content-table td {
-    vertical-align: top;
+    td {
+        vertical-align: top;
+    }
 }
 
 /* *** Content Buttons Line *** */
@@ -1186,21 +1255,23 @@ select[multiple] {
 .files-list {
 }
 .files-list ul {
-	max-height: 106px;
+	max-height: (@cm-files-list-count * (@cm-form-inner-indent + @cm-form-field-height)) - @cm-form-inner-indent;
 	overflow-y: auto;
 	overflow-x: hidden;
 	padding: 0;
-	margin: 0 0 6px 0;
+	margin: 0 0 @cm-form-inner-indent 0;
 }
 .files-list ul li {
-	margin: 6px 0 0 0;
+    height: @cm-form-field-height;
+	margin: @cm-form-inner-indent 0 0 0;
+    line-height: @cm-form-field-height;
 }
 .files-list ul li:first-child {
 	margin: 0;
 }
 .files-list ul li input {
 	float: left;
-	margin: 0 12px 0 0;
+	margin: 0 @cm-form-field-indent 0 0;
 }
 .files-list ul li .text {
 	overflow: hidden;
@@ -1215,7 +1286,7 @@ select[multiple] {
 .single-file .browse-button {
 	display: block;
 	float: left;
-	margin: 0 12px 0 0;
+	margin: 0 @cm-form-field-indent 0 0;
 }
 .single-file .text {
 	overflow: hidden;
@@ -1291,7 +1362,7 @@ select[multiple] {
 
 .pagination {
 	margin: 0 0 @cm-block-margin;
-	line-height: @cm-form-line-height;
+	line-height: @cm-form-field-height;
 }
 .pagination.bottom {
 	margin: 0;
@@ -1307,17 +1378,18 @@ select[multiple] {
 	display: inline-block;
 	margin-left: 2px;
 	vertical-align: top;
+    line-height: @cm-form-field-height;
 }
 .pagination ul li:first-child {
 	margin-left: 0;
 }
 .pagination ul li a {
 	min-width: 10px;
-	height: @cm-form-line-height;
+	height: @cm-form-field-height;
 	padding: 0 6px;
 	display: block;
 	border-radius: 3px;
-	line-height: @cm-form-line-height;
+	line-height: @cm-form-field-height;
 	font-size: 14px;
 	font-weight: bold;
 	color: #666666;
@@ -1527,20 +1599,20 @@ select[multiple] {
     &.has-toolbar {
         .cm-scrollable-content {
             padding-top: 0;
-            top: @cm-form-line-height + @cm-block-margin;
+            top: @cm-form-field-height + @cm-block-margin;
         }
     }
 
     &.has-buttons {
         .cm-scrollable-content {
             padding-bottom: 0;
-            bottom: @cm-form-line-height + @cm-block-margin;
+            bottom: @cm-form-field-height + @cm-block-margin;
         }
     }
 
     &.has-padding.has-buttons {
         .cm-scrollable-content {
-            bottom: @cm-form-line-height + @cm-block-margin + @cm-block-padding;
+            bottom: @cm-form-field-height + @cm-block-margin + @cm-block-padding;
         }
     }
 }
@@ -1550,6 +1622,7 @@ select[multiple] {
 .cm-toolbar {
     white-space: nowrap;
     margin: 0 0 @cm-block-margin 0;
+    font-size: 0;
 
     > .left {
         float: left;
@@ -1560,11 +1633,12 @@ select[multiple] {
     }
 
     .group {
-        margin: 0 0 0 16px;
+        margin: 0 0 0 @cm-toolbar-group-indent;
         padding: 0;
         display: inline-block;
         vertical-align: top;
         list-style: none;
+        font-size: 0;
 
         &:first-child {
             margin: 0;
@@ -1573,8 +1647,8 @@ select[multiple] {
         > li {
             display: inline-block;
             vertical-align: top;
-            margin: 0 0 0 4px;
-            line-height: @cm-form-line-height;
+            margin: 0 0 0 @cm-toolbar-item-indent;
+            line-height: @cm-form-field-height;
 
             &:first-child {
                 margin: 0;
@@ -1596,11 +1670,39 @@ select[multiple] {
             }
 
             &.medium {
-                width: 140px;
+                width: @cm-toolbar-medium;
             }
 
             &.large {
-                width: 250px;
+                width: @cm-toolbar-large;
+            }
+        }
+
+        &.is-merged {
+            > li {
+                margin: 0 0 0 -1px;
+
+                &.button {
+                    border-radius: 0;
+
+                    &:first-child {
+                        margin: 0;
+                        border-radius: @cm-border-radius 0 0 @cm-border-radius;
+                    }
+
+                    &:last-child {
+                        border-radius: 0 @cm-border-radius @cm-border-radius 0;
+                    }
+
+                    &:hover {
+                        z-index: 2;
+                    }
+
+                    &:active,
+                    &.active {
+                        z-index: 2;
+                    }
+                }
             }
         }
     }
@@ -1800,40 +1902,24 @@ select[multiple] {
 .btn-wrap,
 .btn-wrap .hint,
 .single-file .text,
-.files-list ul li,
 .form-field dd.controls,
 .form-icons-outside,
 .check-line,
 .check-line .field,
 .form dl .birth,
 .form dl .time {
-    line-height: @cm-form-line-height;
+    line-height: @cm-form-field-height;
 }
 
 /* Form height dependents on input \ button height */
 
 .check-line {
-    min-height: @cm-form-line-height;
-}
-.btn-wrap {
-    height: @cm-form-line-height;
-}
-
-/* Padding dependents on document line-height */
-
-.form dt {
-    padding: 3px 0;
-}
-
-/* Icon position on input \ button height  */
-
-.com-datepicker-input > .icon.remove {
-    top: 4px;
+    min-height: @cm-form-field-height;
 }
 
 /* ******* ADAPTIVE ******* */
 
-@media only screen and (max-width : 640px) {
+@media only screen and (max-width : 600px) {
 
 	/* Rows */
 	
@@ -1876,14 +1962,21 @@ select[multiple] {
 	
 	/* Forms */
 
-    .form dl dt {
-        width: auto;
-        float: none;
-        font-weight: bold;
-        padding: 0;
-    }
-    .form dl dd {
-        margin: 8px 0 0 0;
+    .form {
+        dl {
+            dt {
+                width: auto;
+                float: none;
+            }
+
+            dd {
+                margin: 0 0 @cm-form-inner-indent;
+
+                &:last-child {
+                    margin: 0;
+                }
+            }
+        }
     }
 
     .form-filter.right,
@@ -1909,14 +2002,51 @@ select[multiple] {
     .form .cols.ten .col {
 		width: auto;
 		float: none;
-		margin: 16px 0 0 0;
+		margin: @cm-form-inner-indent 0 0 0;
+
+        &:first-child {
+            margin-top: 0;
+        }
 	}
-    .form .cols .col:first-child {
-        margin-top: 0;
+
+    /* From To Filter */
+
+    .form-filter-fromto {
+        .form-box {
+            width: auto;
+            float: none;
+            margin: @cm-form-field-indent 0 0 0;
+
+            &:first-child {
+                margin: 0;
+            }
+        }
+
+        &.simple .buttons,
+        .buttons {
+            margin: @cm-form-field-indent 0 0 0;
+        }
     }
-	.form-filter-fromto .form-box {
-		margin-right: 6%;
-	}
+
+    /* *** COMPONENTS *** */
+
+    /* Content Table */
+
+    .content-table {
+        &.adaptive {
+            .is-adaptive & {
+                td {
+                    width: 100% !important;
+                    display: block;
+                    margin: @cm-block-margin 0 0 0;
+
+                    &:first-child {
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
 
     /* Editable Area */
 

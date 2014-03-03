@@ -78,6 +78,9 @@ iframe {
   border: none;
 }
 /* ******* ICONS ******* */
+.icon {
+  background: transparent center center no-repeat;
+}
 .icon.inline {
   margin: 0 4px;
   vertical-align: middle;
@@ -119,7 +122,7 @@ iframe {
 .icon.datepicker {
   height: 24px;
   width: 24px;
-  background: url("../../img/icons/calendar.png");
+  background-image: url("../../img/icons/calendar.png");
 }
 .icon.chrome,
 .icon.firefox,
@@ -165,7 +168,7 @@ iframe {
 .icon.remove {
   width: 16px;
   height: 16px;
-  background: url("../../img/icons/remove.png");
+  background-image: url("../../img/icons/remove.png");
 }
 .icon.settings {
   width: 16px;
@@ -297,6 +300,9 @@ ul.indent {
   height: auto;
   display: block;
 }
+.cm-block-padding {
+  padding: 24px;
+}
 /* ******* ROWS ******* */
 .row-flex {
   min-height: 20px;
@@ -381,12 +387,9 @@ ul.indent {
   font-weight: bold;
   margin-bottom: 10px;
 }
-.form .placeholder {
-  color: #999 !important;
-  font-style: italic !important;
-}
+/* Field */
 .form dl {
-  margin: 10px 0 0 0;
+  margin: 16px 0 0 0;
   padding: 0;
   display: block;
   clear: both;
@@ -404,9 +407,11 @@ ul.indent {
 }
 .form dt {
   width: 150px;
-  float: left;
   display: block;
   margin: 0;
+  padding: 6px 0;
+  float: left;
+  line-height: 16px;
 }
 .form dl.error dt {
   font-weight: bold;
@@ -418,13 +423,41 @@ ul.indent {
 }
 .form dd {
   display: block;
-  margin: 0 0 0 160px;
+  margin: 0 0 0 166px;
   padding: 0;
   position: relative;
 }
 .form dd:first-child {
   margin: 0;
 }
+/* *** FIELD WIS ICON *** */
+.form-field {
+  position: relative;
+}
+.form-field .icon {
+  width: 28px !important;
+  height: 28px !important;
+  position: absolute;
+}
+.form-field.has-icon-left .icon {
+  top: 0;
+  right: auto;
+  bottom: auto;
+  left: 0;
+}
+.form-field.has-icon-left input {
+  padding-left: 28px;
+}
+.form-field.has-icon-right .icon {
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: auto;
+}
+.form-field.has-icon-right input {
+  padding-right: 28px;
+}
+/* *** Hint ***  */
 .form dl .hint {
   font-size: 11px;
   line-height: 15px;
@@ -459,6 +492,7 @@ ul.indent {
   width: 100%;
   cursor: pointer;
 }
+/* Errors */
 .form dl.error input[type="text"],
 .form dl.error input[type="password"],
 .form dl.error textarea,
@@ -473,6 +507,7 @@ ul.indent {
   border: 1px solid #090;
   border-radius: 2px;
 }
+/* Time Picker */
 .form dl .time input,
 .form dl .time select,
 .form dl .time .com-select {
@@ -485,6 +520,7 @@ ul.indent {
   float: left;
   text-align: center;
 }
+/* Browse Button */
 .browse-button {
   display: inline-block;
   position: relative;
@@ -499,13 +535,16 @@ ul.indent {
   overflow: hidden;
 }
 .browse-button input[type="file"] {
+  height: 100%;
   position: absolute;
   top: 0;
   right: 0;
   opacity: 0;
   cursor: pointer;
 }
-.ie8 .browse-button input[type="file"] {
+.browse-button input[type="file"] .ie8,
+.browse-button input[type="file"] .ie7,
+.browse-button input[type="file"] .ie6 {
   filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
 }
 .form dl .birth input {
@@ -522,6 +561,7 @@ ul.indent {
   overflow: hidden;
   text-align: center;
 }
+/* Columns */
 .form .cols {
   margin: 10px 0 0;
 }
@@ -570,6 +610,7 @@ ul.indent {
 .form .cols .col > dl:first-child {
   margin-top: 0;
 }
+/* Separator */
 .form hr {
   height: 0;
   overflow: hidden;
@@ -580,11 +621,12 @@ ul.indent {
   display: block;
   clear: both;
 }
+/* Fieldset */
 .form fieldset {
   border-radius: 5px;
   border: 1px solid #ccc;
-  padding: 10px 26px 26px 26px;
-  margin: 10px 0 0 0;
+  padding: 0 24px 24px 24px;
+  margin: 16px 0 0 0;
 }
 .form fieldset:first-child {
   margin: 0;
@@ -595,7 +637,7 @@ ul.indent {
   color: #333;
 }
 .form fieldset dl:first-child {
-  margin-top: 8px;
+  margin-top: 24px;
 }
 .form fieldset.error {
   border-color: #C00;
@@ -625,7 +667,8 @@ ul.indent {
 }
 /* Buttons Container */
 .btn-wrap {
-  margin-top: 20px;
+  height: 28px;
+  margin-top: 24px;
 }
 .btn-wrap .button,
 .btn-wrap button,
@@ -669,25 +712,16 @@ ul.indent {
   margin: 0;
 }
 /* Check Line */
-.check-line {
-  margin-top: 4px;
-}
-.check-line:first-child {
-  margin: 0;
-}
 .form dd > input[type="checkbox"],
 .check-line input[type="radio"],
 .check-line input[type="checkbox"] {
-  margin: 4px 0 5px 0;
+  margin: 7.5px 0 7.5px 0;
   vertical-align: top;
   padding: 0;
   cursor: pointer;
 }
-.check-line input[type="radio"] {
-  margin-top: 4px;
-}
 .check-line label {
-  padding: 3px 20px 3px 6px;
+  padding: 6px 20px 6px 8px;
   cursor: pointer;
   vertical-align: baseline;
 }
@@ -727,13 +761,18 @@ ul.indent {
 .ie8 .check-line .unveil {
   display: block;
 }
-.form-box dt {
+/* Field Box */
+.form-box > dt {
   width: auto;
   float: none;
 }
-.form-box dd {
-  margin: 4px 0 0 0;
+.form-box > dd {
+  margin: 0 0 8px 0;
 }
+.form-box > dd:last-child {
+  margin: 0;
+}
+/* Form Field */
 .form-field dd.controls {
   float: right;
   margin: 0;
@@ -753,12 +792,13 @@ ul.indent {
 .form-field dd.controls .icon:first-child {
   margin: 0;
 }
-.form-field dd.descr {
+.form-field dd.descr,
+.form-field dd.descr:last-child {
   margin-right: 32px;
 }
 .form-image-box > .l {
   float: left;
-  margin: 0 12px 0 0;
+  margin: 0 16px 0 0;
 }
 .form-image-box > .l img {
   width: 80px;
@@ -780,11 +820,7 @@ ul.indent {
 }
 .form-image-box.style2 .browse-button {
   display: inline-block;
-  margin: 0 4px 0 0;
-}
-.ie7 .form-image-box.style2 .browse-button {
-  display: inline;
-  zoom: 1;
+  margin: 0 8px 0 0;
 }
 .form-image-box.flat > .l {
   float: none;
@@ -936,12 +972,12 @@ ul.has-icons-outside-three li {
   clear: none;
 }
 .form-filter-fromto .form-box {
-  width: 190px;
-  margin: 0 3% 0 0;
+  width: 200px;
+  margin: 0 24px 0 0;
 }
 .form-filter-fromto .buttons {
   float: left;
-  margin: 30px 0 0 0;
+  margin: 28px 0 0 0;
 }
 .form-filter-fromto.simple .buttons {
   margin: 0;
@@ -952,8 +988,8 @@ input[type="email"],
 input[type="number"],
 input[type="password"] {
   width: 100%;
-  height: 22px;
-  padding: 2px 6px;
+  height: 28px;
+  padding: 6px 6px;
   vertical-align: top;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -969,8 +1005,8 @@ input[type="password"] {
 /* Textarea */
 textarea {
   width: 100%;
-  height: 84px;
-  min-height: 22px;
+  height: 100px;
+  min-height: 28px;
   padding: 6px;
   vertical-align: top;
   -moz-box-sizing: border-box;
@@ -992,9 +1028,9 @@ input[type="submit"],
 input[type="reset"],
 button,
 .button {
-  height: 22px;
+  height: 28px;
   margin: 0;
-  padding: 0 10px;
+  padding: 0 14px;
   position: relative;
   vertical-align: top;
   -moz-box-sizing: border-box;
@@ -1003,7 +1039,7 @@ button,
   -moz-background-clip: border-box;
   background-clip: border-box;
   text-align: center;
-  line-height: 22px;
+  line-height: 28px;
   font-size: 12px;
   cursor: pointer;
 }
@@ -1040,11 +1076,11 @@ button .icon.remove,
 /* Select */
 select {
   width: 100%;
-  height: 22px;
+  height: 28px;
   vertical-align: top;
 }
 select[multiple] {
-  height: 84px;
+  height: 100px;
 }
 /* Progress Bar */
 .progress-bar {
@@ -1111,21 +1147,23 @@ select[multiple] {
 }
 /* *** Files list *** */
 .files-list ul {
-  max-height: 106px;
+  max-height: 100px;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 0;
-  margin: 0 0 6px 0;
+  margin: 0 0 8px 0;
 }
 .files-list ul li {
-  margin: 6px 0 0 0;
+  height: 28px;
+  margin: 8px 0 0 0;
+  line-height: 28px;
 }
 .files-list ul li:first-child {
   margin: 0;
 }
 .files-list ul li input {
   float: left;
-  margin: 0 12px 0 0;
+  margin: 0 16px 0 0;
 }
 .files-list ul li .text {
   overflow: hidden;
@@ -1139,7 +1177,7 @@ select[multiple] {
 .single-file .browse-button {
   display: block;
   float: left;
-  margin: 0 12px 0 0;
+  margin: 0 16px 0 0;
 }
 .single-file .text {
   overflow: hidden;
@@ -1217,6 +1255,7 @@ select[multiple] {
   display: inline-block;
   margin-left: 2px;
   vertical-align: top;
+  line-height: 28px;
 }
 .pagination ul li:first-child {
   margin-left: 0;
@@ -1431,6 +1470,7 @@ select[multiple] {
 .cm-toolbar {
   white-space: nowrap;
   margin: 0 0 24px 0;
+  font-size: 0;
 }
 .cm-toolbar > .left {
   float: left;
@@ -1444,6 +1484,7 @@ select[multiple] {
   display: inline-block;
   vertical-align: top;
   list-style: none;
+  font-size: 0;
 }
 .cm-toolbar .group:first-child {
   margin: 0;
@@ -1475,6 +1516,26 @@ select[multiple] {
 }
 .cm-toolbar .group > li.large {
   width: 250px;
+}
+.cm-toolbar .group.is-merged > li {
+  margin: 0 0 0 -1px;
+}
+.cm-toolbar .group.is-merged > li.button {
+  border-radius: 0;
+}
+.cm-toolbar .group.is-merged > li.button:first-child {
+  margin: 0;
+  border-radius: 3px 0 0 3px;
+}
+.cm-toolbar .group.is-merged > li.button:last-child {
+  border-radius: 0 3px 3px 0;
+}
+.cm-toolbar .group.is-merged > li.button:hover {
+  z-index: 2;
+}
+.cm-toolbar .group.is-merged > li.button:active,
+.cm-toolbar .group.is-merged > li.button.active {
+  z-index: 2;
 }
 /* *** Selectable Node *** */
 .cm-selectable {
@@ -1661,7 +1722,6 @@ select[multiple] {
 .btn-wrap,
 .btn-wrap .hint,
 .single-file .text,
-.files-list ul li,
 .form-field dd.controls,
 .form-icons-outside,
 .check-line,
@@ -1674,19 +1734,8 @@ select[multiple] {
 .check-line {
   min-height: 28px;
 }
-.btn-wrap {
-  height: 28px;
-}
-/* Padding dependents on document line-height */
-.form dt {
-  padding: 3px 0;
-}
-/* Icon position on input \ button height  */
-.com-datepicker-input > .icon.remove {
-  top: 4px;
-}
 /* ******* ADAPTIVE ******* */
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 600px) {
   /* Rows */
   .row-flex .col-1 {
     width: 10%;
@@ -1744,11 +1793,12 @@ select[multiple] {
   .form dl dt {
     width: auto;
     float: none;
-    font-weight: bold;
-    padding: 0;
   }
   .form dl dd {
-    margin: 8px 0 0 0;
+    margin: 0 0 8px;
+  }
+  .form dl dd:last-child {
+    margin: 0;
   }
   .form-filter.right,
   .form-filter {
@@ -1772,13 +1822,42 @@ select[multiple] {
   .form .cols.ten .col {
     width: auto;
     float: none;
-    margin: 16px 0 0 0;
+    margin: 8px 0 0 0;
   }
-  .form .cols .col:first-child {
+  .form .cols .col:first-child,
+  .form .cols.two .col:first-child,
+  .form .cols.three .col:first-child,
+  .form .cols.four .col:first-child,
+  .form .cols.five .col:first-child,
+  .form .cols.six .col:first-child,
+  .form .cols.seven .col:first-child,
+  .form .cols.eight .col:first-child,
+  .form .cols.nine .col:first-child,
+  .form .cols.ten .col:first-child {
     margin-top: 0;
   }
+  /* From To Filter */
   .form-filter-fromto .form-box {
-    margin-right: 6%;
+    width: auto;
+    float: none;
+    margin: 16px 0 0 0;
+  }
+  .form-filter-fromto .form-box:first-child {
+    margin: 0;
+  }
+  .form-filter-fromto.simple .buttons,
+  .form-filter-fromto .buttons {
+    margin: 16px 0 0 0;
+  }
+  /* *** COMPONENTS *** */
+  /* Content Table */
+  .is-adaptive .content-table.adaptive td {
+    width: 100% !important;
+    display: block;
+    margin: 24px 0 0 0;
+  }
+  .is-adaptive .content-table.adaptive td:first-child {
+    margin: 0;
   }
   /* Editable Area */
   .cm-editable > .border,
@@ -1878,10 +1957,6 @@ select[multiple] {
   -webkit-transition: -webkit-transform 0.3s ease-in-out;
   -ms-transition: -ms-transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out;
-}
-.com-select .com-select-input .com-select-inner .com-select-arrow:hover {
-  background-color: #fff;
-  background-color: rgba(255, 255, 255, 0.5);
 }
 .com-select:focus .com-select-input .com-select-inner,
 .com-select.active .com-select-input .com-select-inner {
@@ -1998,21 +2073,24 @@ select[multiple] {
   outline: none;
 }
 .com-datepicker-input.has-clear-button {
-  margin: 0 26px 0 0;
+  margin: 0 36px 0 0;
 }
 .com-datepicker-input > .icon {
+  width: 28px;
+  height: 28px;
   position: absolute;
 }
 .com-datepicker-input > .icon.datepicker {
   top: 0;
   right: 0;
-}
-.com-datepicker-input > .icon.close {
-  top: 6px;
-  right: 6px;
+  bottom: auto;
+  left: auto;
 }
 .com-datepicker-input > .icon.remove {
-  right: -26px;
+  top: 0;
+  right: -36px;
+  bottom: auto;
+  left: auto;
 }
 /* Tooltip */
 .com-datepicker-tooltip > .inner > .scroll {
@@ -2664,7 +2742,7 @@ select[multiple] {
   height: 20px;
   float: right;
   padding: 0 26px 0 0;
-  background: url(../../img/components/gallery-close.png) 100% 100% no-repeat;
+  background: url('../../img/components/gallery-close.png') 100% 100% no-repeat;
   line-height: 20px;
   color: #e51937;
   cursor: pointer;
@@ -2725,7 +2803,7 @@ select[multiple] {
 .com-gallery-viewer .loader-icon {
   width: 16px;
   height: 11px;
-  background: url(../../img/components/loader.gif);
+  background: url('../../img/components/loader.gif');
   position: absolute;
   top: 50%;
   left: 50%;
@@ -2777,11 +2855,11 @@ select[multiple] {
   margin: -25px 0 0 0;
 }
 .com-gallery-viewer .arrows-next .icon {
-  background: url(../../img/components/gallery-arrow-next.png) 0 0 no-repeat;
+  background: url('../../img/components/gallery-arrow-next.png') 0 0 no-repeat;
   right: 10px;
 }
 .com-gallery-viewer .arrows-prev .icon {
-  background: url(../../img/components/gallery-arrow-prev.png) 0 0 no-repeat;
+  background: url('../../img/components/gallery-arrow-prev.png') 0 0 no-repeat;
   left: 10px;
 }
 .com-gallery-viewer .arrows-next:hover,
@@ -2994,9 +3072,10 @@ select[multiple] {
 }
 /* ******* TAGS ******* */
 body {
-  padding: 24px;
+  padding: 0;
   margin: 0;
   font-family: arial, helvetica, sans-serif;
+  line-height: 16px;
   font-size: 13px;
 }
 h1,

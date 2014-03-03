@@ -1,30 +1,28 @@
 /* ******* DATEPICKER ******* */
 
 .com-datepicker-input {
+    @clear-button-indent: @cm-form-field-height + @cm-form-inner-indent;
+
     max-width: 200px;
     position: relative;
     z-index: 1;
     outline: none;
 
     &.has-clear-button {
-        margin: 0 26px 0 0;
+        margin: 0 @clear-button-indent 0 0;
     }
 
     > .icon {
+        width: @cm-form-field-height;
+        height: @cm-form-field-height;
         position: absolute;
 
         &.datepicker {
-            top: 0;
-            right: 0;
-        }
-
-        &.close {
-            top: 6px;
-            right: 6px;
+            .cm-position(0, 0, auto, auto);
         }
 
         &.remove {
-            right: -26px;
+            .cm-position(0, -@clear-button-indent, auto, auto);
         }
     }
 }

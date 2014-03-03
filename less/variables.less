@@ -1,21 +1,56 @@
 // /* ******* PATH ******* */
 
 @cm-image-path: '../libs/common/img';
-@tmp-image-path: '../img';
+@tpl-image-path: '../img';
 
 // /* ******* STYLES ******* */
 
-@tmp-font-family: arial, helvetica, sans-serif;
-@tmp-font-family-alternative: Tahoma ,Geneva, Kalimati, sans-serif;
-@tmp-font-size: 14px;
+@tpl-font-family: arial, helvetica, sans-serif;
+@tpl-font-family-alternative: Tahoma ,Geneva, Kalimati, sans-serif;
+@tpl-font-size: 14px;
 
-@tmp-color: #323232;
-@tmp-color-light: #787878;
-@tmp-color-prelight: #a0a0a0;
-@tmp-color-lightness: #d2d2d2;
-@tmp-color-link: #5d89ba;
-@tmp-border-color: #dbdbdb;
+@tpl-color: #323232;
+@tpl-color-light: #787878;
+@tpl-color-prelight: #a0a0a0;
+@tpl-color-lightness: #d2d2d2;
+@tpl-color-link: #5d89ba;
 
-@tmp-column-right-style1: 33%;
-@tmp-counter-height: 16px;
-@tmp-border-radius: 3px;
+@tpl-border-color: #dbdbdb;
+@tpl-border-color2: #e6e6e6;
+@tpl-placeholder-color: #b4b4b4;
+
+@tpl-item-background: #F3F3F3;
+@tpl-item-background-hover: #f9f9f9;
+@tpl-item-background-active: #ffffff;
+@tpl-item-background-important: #fff0cc;
+@tpl-item-background-important-hover: darken(@tpl-item-background-important, 5%);
+
+@tpl-status-color: @tpl-border-color;
+@tpl-status-color-online: #84b64d;
+
+@tpl-button-background: @tpl-item-background;
+@tpl-button-background-hover: #ffffff;
+@tpl-button-background-active: #5d89ba;
+@tpl-button-color: @tpl-color-light;
+@tpl-button-color-hover: @tpl-color;
+@tpl-button-color-active: #fff;
+@tpl-button-border-color: @tpl-border-color;
+@tpl-button-border-color-active: #3a659a;
+
+@tpl-column-right-style1: 33%;
+@tpl-column-right-style2: 50%;
+@tpl-column-right-style3: 54%;
+@tpl-counter-height: 16px;
+@tpl-border-radius: 3px;
+@tpl-risks-width: 39%;
+
+// /* ******* COMMON ******* */
+
+@cm-line-height: @tpl-font-size + round(@tpl-font-size / 4);
+
+@cm-form-field-height: 30px;
+@cm-block-margin: 20px;
+@cm-block-padding: @cm-block-margin;
+@cm-border-radius: @tpl-border-radius;
+
+@cm-toolbar-group-indent: @cm-block-margin;
