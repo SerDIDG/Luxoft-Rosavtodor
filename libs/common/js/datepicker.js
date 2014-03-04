@@ -22,6 +22,10 @@ Com['Datepicker'] = function(o){
             'title' : false,
             'menuMargin' : 3,
             'events' : {},
+            'icons' : {
+                'datepicker' : 'icon medium datepicker linked',
+                'clear' : 'icon small remove linked'
+            },
             'langs' : {
                 'days' : ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
                 'months' : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -76,8 +80,10 @@ Com['Datepicker'] = function(o){
         /* *** RENDER STRUCTURE *** */
         nodes['container'] = cm.Node('div', {'class' : 'com-datepicker-input'},
             nodes['hidden'] = cm.Node('input', {'type' : 'hidden'}),
-            nodes['input'] = cm.Node('input', {'type' : 'text'}),
-            nodes['icon'] = cm.Node('div', {'class' : 'icon datepicker linked'}),
+            cm.Node('div', {'class' : 'form-field has-icon-right'},
+                nodes['input'] = cm.Node('input', {'type' : 'text'}),
+                nodes['icon'] = cm.Node('div', {'class' : config['icons']['datepicker']})
+            ),
             nodes['menuContainer'] = cm.Node('div',
                 nodes['calendarContainer'] = cm.Node('div')
             )
@@ -103,7 +109,7 @@ Com['Datepicker'] = function(o){
         if(config['showClearButton']){
             cm.addClass(nodes['container'], 'has-clear-button');
             nodes['container'].appendChild(
-                nodes['clearButton'] = cm.Node('div', {'class' : 'icon remove linked', 'title' : config['langs']['clearButtonTitle']})
+                nodes['clearButton'] = cm.Node('div', {'class' : config['icons']['clear'], 'title' : config['langs']['clearButtonTitle']})
             );
         }
         // Today Button
@@ -153,7 +159,6 @@ Com['Datepicker'] = function(o){
         components['menu'] = new Com.Tooltip({
             'container' : config['renderInBody'] ? document.body : nodes['container'],
             'className' : 'com-datepicker-tooltip',
-            'width' : 'targetWidth',
             'top' : ['targetHeight', config['menuMargin']].join('+'),
             'content' : nodes['menuContainer'],
             'target' : nodes['container'],

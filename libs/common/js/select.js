@@ -16,6 +16,9 @@ Com['Select'] = function(o){
             'menuMargin' : 3,
             'options' : [],
             'selected' : 0,
+            'icons' : {
+                'arrow' : 'icon medium select-arrow linked'
+            },
             'events' : {}
         }, o),
         dataAttributes = ['title', 'showTitleTag', 'multiple', 'renderInBody'],
@@ -144,11 +147,9 @@ Com['Select'] = function(o){
     var renderSingle = function(){
         nodes['container'] = cm.Node('div', {'class' : 'com-select'},
             nodes['hidden'] = cm.Node('select', {'data-select' : 'false', 'class' : 'display-none'}),
-            nodes['input'] = cm.Node('div', {'class' : 'com-select-input clear'},
-                cm.Node('div', {'class' : 'com-select-inner'},
-                    nodes['arrow'] = cm.Node('div', {'class' : 'com-select-arrow'}),
-                    nodes['text'] = cm.Node('div', {'class' : 'com-select-text'})
-                )
+            cm.Node('div', {'class' : 'form-field has-icon-right'},
+                nodes['arrow'] = cm.Node('div', {'class' : config['icons']['arrow']}),
+                nodes['text'] = cm.Node('input', {'type' : 'text', 'readOnly' : 'true'})
             ),
             nodes['scroll'] = cm.Node('div', {'class' : 'cm-items-list'},
                 nodes['items'] = cm.Node('ul')
@@ -211,42 +212,56 @@ Com['Select'] = function(o){
                     set(optionsList[0], true);
                 }else{
                     active = null;
-                    cm.clearNode(nodes['text']);
+                    nodes['text'].value = ''
                 }
             }
         }
     };
 
     var setMiscEvents = function(){
-        // Switch items on arrows press
-        cm.addEvent(nodes['container'], 'keydown', function(e){
-            e = cm.getEvent(e);
-            if(optionsLength){
-                var item = options[active],
-                    index = optionsList.indexOf(item);
-                if(e.keyCode == 38){
-                    if(index - 1 >= 0){
-                        set(optionsList[index - 1], true);
-                    }else{
-                        set(optionsList[optionsLength - 1], true);
+        if(!config['multiple']){
+            // Switch items on arrows press
+            cm.addEvent(nodes['container'], 'keydown', function(e){
+                e = cm.getEvent(e);
+                if(optionsLength){
+                    var item = options[active],
+                        index = optionsList.indexOf(item),
+                        option;
+
+                    switch(e.keyCode){
+                        case 38:
+                            if(index - 1 >= 0){
+                                option = optionsList[index - 1];
+                            }else{
+                                option = optionsList[optionsLength - 1];
+                            }
+                            break;
+
+                        case 40:
+                            if(index + 1 < optionsLength){
+                                option = optionsList[index + 1];
+                            }else{
+                                option = optionsList[0];
+                            }
+                            break;
+
+                        case 13:
+                            components['menu'].hide();
+                            break;
                     }
-                }else if(e.keyCode == 40){
-                    if(index + 1 < optionsLength){
-                        set(optionsList[index + 1], true);
-                    }else{
-                        set(optionsList[0], true);
+
+                    if(option){
+                        set(option, true);
+                        scrollToItem(option);
                     }
                 }
-            }
-        });
-        cm.addEvent(nodes['container'], 'focus', function(){
-            cm.addEvent(document.body, 'keydown', blockDocumentArrows)
-        });
-        cm.addEvent(nodes['container'], 'blur', function(){
-            cm.removeEvent(document.body, 'keydown', blockDocumentArrows)
-        });
-
-        if(!config['multiple']){
+            });
+            cm.addEvent(nodes['container'], 'focus', function(){
+                cm.addEvent(document.body, 'keydown', blockDocumentArrows)
+            });
+            cm.addEvent(nodes['container'], 'blur', function(){
+                cm.removeEvent(document.body, 'keydown', blockDocumentArrows)
+            });
             // Render tooltip
             components['menu'] = new Com.Tooltip({
                 'container' : config['renderInBody']? document.body : nodes['container'],
@@ -254,7 +269,7 @@ Com['Select'] = function(o){
                 'width' : 'targetWidth',
                 'top' : ['targetHeight', config['menuMargin']].join('+'),
                 'content' : nodes['scroll'],
-                'target' : nodes['input'],
+                'target' : nodes['container'],
                 'targetEvent' : 'click',
                 'hideOnReClick' : true,
                 'events' : {
@@ -266,16 +281,20 @@ Com['Select'] = function(o){
         }
     };
 
+    var scrollToItem = function(option){
+        nodes['menu']['content'].scrollTop = option['node'].offsetTop - nodes['menu']['content'].offsetTop;
+    };
+
     var show = function(){
         if(!optionsLength){
             components['menu'].hide();
         }else{
             // Set classes
-            cm.addClass(nodes['input'], 'hidden');
             cm.addClass(nodes['container'], 'active');
+            nodes['text'].focus();
             // Scroll to active element
             if(active && options[active]){
-                nodes['menu']['content'].scrollTop = options[active]['node'].offsetTop - nodes['menu']['content'].offsetTop;
+                scrollToItem(options[active]);
             }
         }
         /* *** EXECUTE API EVENTS *** */
@@ -284,8 +303,8 @@ Com['Select'] = function(o){
 
     var hide = function(){
         // Remove classes
-        cm.removeClass(nodes['input'], 'hidden');
         cm.removeClass(nodes['container'], 'active');
+        nodes['text'].blur();
         /* *** EXECUTE API EVENTS *** */
         executeEvent('onBlur');
     };
@@ -324,7 +343,7 @@ Com['Select'] = function(o){
         optionsList.forEach(function(item){
             cm.removeClass(item['node'], 'active');
         });
-        cm.clearNode(nodes['text']).appendChild(cm.Node('span', {'innerHTML' : option['text']}));
+        nodes['text'].value = option['text'];
         option['option'].selected = true;
         cm.addClass(option['node'], 'active');
     };

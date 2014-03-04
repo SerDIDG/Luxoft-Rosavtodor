@@ -33,7 +33,20 @@
         border: 1px solid @tpl-border-color2;
         border-radius: @tpl-border-radius ;
         background: #fff;
+        .cm-transition(border-color 0.3s ease-in-out);
         .cm-placeholder(@tpl-placeholder-color);
+
+        &.error {
+            border-color: @tpl-input-border-color-error;
+        }
+
+        &.ok {
+            border-color: @tpl-input-border-color-ok;
+        }
+
+        &:focus {
+            border-color: @tpl-input-border-color-active;
+        }
     }
 
     .input-inner {
@@ -53,12 +66,14 @@
         line-height: @cm-form-field-height - 2px;
         .cm-transition(all 0.2s ease-in-out);
 
+        .browse-button:hover &,
         &:hover {
             background: @tpl-button-background-hover;
             color: @tpl-button-color-hover;
             .cm-transition(all 0.1s ease-in-out);
         }
 
+        .browse-button:active &,
         &:active,
         &.active {
             box-shadow: inset 0 1px 5px rgba(0,0,0,0.3),
@@ -116,8 +131,9 @@ p {
 }
 
 a {
-    color: @tpl-color-link;
+    font-weight: normal;
     text-decoration: underline;
+    color: @tpl-color-link;
 
     &:hover {
         text-decoration: none;
@@ -152,15 +168,6 @@ ul:extend(p) {
 
 /* ******* FORMS ******* */
 
-.form {
-    color: @tpl-color-light;
-
-    dl .hint {
-        font-size: @tpl-font-size - 3;
-        color: @tpl-color-lightness; 
-    }
-}
-
 /* *** INPUTS *** */
 
 .input,
@@ -172,11 +179,26 @@ textarea {
     #tpl > .input;
     #tpl > .input-inner;
 }
+
 textarea {
     height: 100px;
 }
 
-input {
+select {
+    padding-bottom: 4px;
+    padding-right: 4px;
+    padding-top: 4px;
+
+    &[multiple] {
+        padding: 4px;
+    }
+}
+
+.com-multiselect {
+    .inner {
+        #tpl > .input;
+        height: auto;
+    }
 }
 
 /* *** BUTTONS *** */
@@ -187,6 +209,19 @@ input[type='button'],
 input[type='reset'],
 button {
     #tpl > .button;
+}
+
+/* *** BASIC FIELD *** */
+
+.form {
+    font-weight: bold;
+    font-size: @tpl-font-size - 2;
+    color: @tpl-color-light;
+
+    dl .hint {
+        font-size: @tpl-font-size - 3;
+        color: @tpl-placeholder-color;
+    }
 }
 
 /* ******* STATIC CLASSES ******* */
@@ -332,6 +367,48 @@ button {
         max-width: 300px;
     }
 
+}
+
+/* *** LOGIN BOX *** */
+
+.tpl-login-box {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 10px 0 0 0;
+
+    .logo {
+        width: 200px;
+        height: 110px;
+        margin: 0 auto 42px;
+        background: url('@{tpl-image-path}/logo-large.png');
+    }
+
+    .form {
+        dl {
+            margin: 10px 0 0 0;
+
+            &:first-child {
+                margin: 0;
+            }
+        }
+
+        dt {
+            padding: 0;
+            margin: 0 0 2px;
+        }
+    }
+
+    .forgot {
+        float: right;
+    }
+
+    .btn-wrap {
+        margin: 10px 0 0 0;
+
+        input {
+            width: 100%;
+        }
+    }
 }
 
 /* ******* STRUCTURE ******* */

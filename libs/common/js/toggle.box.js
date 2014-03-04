@@ -324,9 +324,9 @@ Com['ToggleBoxGridlist'] = function(o){
 		boxes[id]['isHide'] = false;
 		for(var i = 0, l = boxes[id]['blocks'].length; i < l; i++){
 			cm.removeClass(boxes[id]['blocks'][i], 'display-none');
-			cm.addClass(boxes[id]['blocks'][i], 'com-gridlist-grey');
+			cm.addClass(boxes[id]['blocks'][i], 'is-show');
 		}
-		cm.addClass(boxes[id]['item'], 'com-gridlist-grey');
+		cm.addClass(boxes[id]['item'], 'is-show');
 		if(config['useLangs']){
 			boxes[id]['button'].innerHTML = config['langs']['hideTitle'];
 		}
@@ -344,9 +344,9 @@ Com['ToggleBoxGridlist'] = function(o){
 		}
         cm.forEach(boxes[id]['blocks'], function(item){
             cm.addClass(item, 'display-none');
-            cm.removeClass(item, 'com-gridlist-grey');
+            cm.removeClass(item, 'is-show');
         });
-		cm.removeClass(boxes[id]['item'], 'com-gridlist-grey');
+		cm.removeClass(boxes[id]['item'], 'is-show');
 		if(config['useLangs']){
 			boxes[id]['button'].innerHTML = config['langs']['showTitle'];
 		}

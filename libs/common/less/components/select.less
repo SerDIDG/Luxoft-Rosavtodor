@@ -1,67 +1,25 @@
 /* ******* SELECT ******* */
 
 .com-select {
-    height: 28px;
     position: relative;
     z-index: 1;
     outline: none;
 
-    .com-select-input {
-        cursor: pointer;
-
-        .com-select-inner {
-            height: 26px;
-            background: #fff;
-            border: @cm-border-style;
-            border-radius: @cm-border-radius;
-
-            .com-select-text {
-                padding: 0 8px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                word-break: normal;
-                line-height: 26px;
-                color: #202020;
-            }
-
-            .com-select-arrow {
-                width: 26px;
-                height: 26px;
-                background: url("@{cm-image-path}/components/select-arrow.png") center center no-repeat;
-                float: right;
-                cursor: pointer;
-                -webkit-transition: -webkit-transform 0.3s ease-in-out;
-                    -ms-transition:     -ms-transform 0.3s ease-in-out;
-                        transition:         transform 0.3s ease-in-out;
-            }
+    .form-field {
+        .icon {
+            -webkit-transition+: -webkit-transform 0.3s ease-in-out;
+                -ms-transition+:     -ms-transform 0.3s ease-in-out;
+                    transition+:         transform 0.3s ease-in-out;
         }
     }
 
     &:focus,
     &.active {
-        .com-select-input {
-            .com-select-inner {
-                border-color: @cm-border-color-active;
-                background: #fdffff;
-
-                .com-select-arrow {
-                    -webkit-transform: rotate(180deg);
-                        -ms-transform: rotate(180deg);
-                            transform: rotate(180deg);
-                }
-            }
-        }
-    }
-
-    &.disabled {
-        .com-select-input {
-            .com-select-inner {
-                background: #f5f5f5;
-
-                .com-select-text {
-                    color: #a6a6a6;
-                }
+        .form-field {
+            .icon {
+                -webkit-transform: rotate(180deg);
+                    -ms-transform: rotate(180deg);
+                        transform: rotate(180deg);
             }
         }
     }
@@ -86,12 +44,5 @@
 
     .cm-items-list ul {
         max-height: 104px;
-    }
-
-    &:active {
-        .inner {
-            border-color: @cm-border-color-active;
-            background: #FDFFFF;
-        }
     }
 }
