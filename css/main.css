@@ -3357,7 +3357,6 @@ button.active {
 .header > .inner,
 .content > .inner,
 .footer > .inner {
-  max-width: 1220px;
   margin: 0 auto;
 }
 /* ******* HEADER ******* */
